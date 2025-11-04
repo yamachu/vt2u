@@ -1,55 +1,19 @@
 using System;
-using System.Diagnostics;
 using System.Runtime.InteropServices.JavaScript;
-using System.Threading.Tasks;
 
-Console.WriteLine("Hello, Browser!");
-
-if (args.Length == 1 && args[0] == "start")
-    StopwatchSample.Start();
-
-while(true)
+internal class Program
 {
-    StopwatchSample.Render();
-    await Task.Delay(1000);
+    private static void Main(string[] args)
+    {
+    }
 }
 
-partial class StopwatchSample
+partial class VtLib
 {
-    private static Stopwatch stopwatch = new();
-
-    public static void Start() => stopwatch.Start();
-    public static void Render() => SetInnerText("#time", stopwatch.Elapsed.ToString(@"mm\:ss"));
-    
-    [JSImport("dom.setInnerText", "main.js")]
-    internal static partial void SetInnerText(string selector, string content);
-
     [JSExport]
-    internal static bool Toggle()
+    internal static int SampleCallee()
     {
-        if (stopwatch.IsRunning)
-        {
-            stopwatch.Stop();
-            return false;
-        }
-        else
-        {
-            stopwatch.Start();
-            return true;
-        }
+        System.Console.WriteLine("SampleCallee called");
+        return 42;
     }
-
-    [JSExport]
-    internal static void Reset()
-    {
-        if (stopwatch.IsRunning)
-            stopwatch.Restart();
-        else
-            stopwatch.Reset();
-
-        Render();
-    }
-
-    [JSExport]
-    internal static bool IsRunning() => stopwatch.IsRunning;
 }

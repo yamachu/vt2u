@@ -1,35 +1,28 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { startTransition, useActionState, useCallback } from "react";
+import { useWorker } from "./hooks/useWorker";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const workerRequest = useWorker("/vtlib/worker.js");
+
+  const [callResult, callFunc, isPending] = useActionState(async () => {
+    const result = await workerRequest<number>({ command: "sampleCall" });
+    return result;
+  }, 0);
+  const handleClick = useCallback(() => {
+    startTransition(() => {
+      callFunc();
+    });
+  }, [callFunc]);
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <button onClick={handleClick} disabled={isPending}>
+        Call Worker
+      </button>
+      <div>Result: {callResult ?? "No result"}</div>
+      {isPending && <div>Loading...</div>}
     </>
-  )
+  );
 }
 
-export default App
+export default App;
