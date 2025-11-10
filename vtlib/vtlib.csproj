@@ -2,6 +2,18 @@
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+
+    <!-- WASM size optimization -->
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <WasmStripILAfterAOT>true</WasmStripILAfterAOT>
+    <WasmEnableExceptionHandling>true</WasmEnableExceptionHandling>
+    <RunAOTCompilation>false</RunAOTCompilation>
+
+    <!-- Trimming for size reduction -->
+    <PublishTrimmed>true</PublishTrimmed>
+    <TrimMode>full</TrimMode>
+    <EnableTrimAnalyzer>true</EnableTrimAnalyzer>
+    <SuppressTrimAnalysisWarnings>false</SuppressTrimAnalysisWarnings>
   </PropertyGroup>
 
   <ItemGroup>
