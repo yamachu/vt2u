@@ -3,4 +3,15 @@
     <TargetFramework>net9.0</TargetFramework>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
+
+  <ItemGroup>
+    <NativeFileReference Include="../sptk-wasm/build/libsptk.a" />
+    <NativeFileReference Include="../sptk-wasm/build/sptk_wrapper.o" />
+  </ItemGroup>
+
+  <Target Name="CheckSptkFiles" BeforeTargets="Build">
+    <Message Text="Checking SPTK WASM files..." Importance="high" />
+    <Warning Text="SPTK WASM files not found. Run 'cd ../sptk-wasm &amp;&amp; ./build.sh' first."
+      Condition="!Exists('../sptk-wasm/build/libsptk.a')" />
+  </Target>
 </Project>
