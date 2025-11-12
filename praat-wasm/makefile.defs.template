@@ -1,0 +1,3 @@
+COMMONFLAGS = -DUNIX -Dlinux -DNO_GUI -DNO_NETWORK -DNO_GRAPHICS -DNO_AUDIO
+CFLAGS = -std=gnu99 $(COMMONFLAGS) -Werror=missing-prototypes -Werror=implicit
+CXXFLAGS = -std=c++17 $(COMMONFLAGS) -Wshadow
