@@ -8,7 +8,7 @@ function copyVtlibFiles() {
   return {
     name: "copy-vtlib-files",
     async buildStart() {
-      const sourcePath = "../vtlib/bin/Release/net9.0/publish/wwwroot";
+      const sourcePath = "../vtlib/bin/Release/net10.0/publish/wwwroot";
       const targetPath = "./public/vtlib";
 
       try {
