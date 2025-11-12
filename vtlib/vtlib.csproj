@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk.WebAssembly">
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 
     <!-- WASM size optimization -->
@@ -14,16 +14,27 @@
     <TrimMode>full</TrimMode>
     <EnableTrimAnalyzer>true</EnableTrimAnalyzer>
     <SuppressTrimAnalysisWarnings>false</SuppressTrimAnalysisWarnings>
+
+    <!-- from .NET 10, required this flag -->
+    <WasmBuildNative>true</WasmBuildNative>
+    <!-- wasm-ld : error initial memory too small, 54656032 bytes needed -->
+    <!-- emcc : error INITIAL_MEMORY must be a multiple of WebAssembly page size (64KiB), was 54656032 -->
+    <WasmInitialHeapSize>67108864</WasmInitialHeapSize>
   </PropertyGroup>
 
   <ItemGroup>
-    <NativeFileReference Include="../sptk-wasm/build/libsptk.a" />
-    <NativeFileReference Include="../sptk-wasm/build/sptk_wrapper.o" />
+    <NativeFileReference Include="../praat/fon/libfon.a" />
+    <NativeFileReference Include="../praat/melder/libmelder.a" />
+    <NativeFileReference Include="../praat/sys/libsys.a" />
+    <NativeFileReference Include="../praat/dwsys/libdwsys.a" />
+    <NativeFileReference Include="../praat/kar/libkar.a" />
+    <NativeFileReference Include="../praat/external/clapack/libclapack.a" />
+    <NativeFileReference Include="../praat-wasm/build/sound_formant_api.o" />
   </ItemGroup>
 
-  <Target Name="CheckSptkFiles" BeforeTargets="Build">
-    <Message Text="Checking SPTK WASM files..." Importance="high" />
-    <Warning Text="SPTK WASM files not found. Run 'cd ../sptk-wasm &amp;&amp; ./build.sh' first."
-      Condition="!Exists('../sptk-wasm/build/libsptk.a')" />
+  <Target Name="CheckPraatFiles" BeforeTargets="Build">
+    <Message Text="Checking Praat WASM files..." Importance="high" />
+    <Warning Text="Praat WASM files not found. Run 'cd ../praat-wasm &amp;&amp; ./build.sh' first."
+      Condition="!Exists('../praat-wasm/build/sound_formant_api.o')" />
   </Target>
 </Project>
