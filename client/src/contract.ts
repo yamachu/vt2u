@@ -14,3 +14,6 @@ export interface VocalTractResult {
   FemaleHeight: number;
   MaleHeight: number;
 }
+
+export const RecordingDuration = 2;
+export const SampleRate = 48000;
