@@ -23,6 +23,11 @@ self.addEventListener(
         case "sampleCall":
           result = assemblyExports.VtLib.SampleCallee();
           break;
+        case "Analyze":
+          result = JSON.parse(
+            assemblyExports.VtLib.Analyze(e.data.samples, e.data.sampleRate)
+          );
+          break;
         default:
           throw new Error("Unknown command: " + e.data.command);
       }
