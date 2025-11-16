@@ -46,7 +46,7 @@ jobs:
           working-directory: ./client
           run: |
             pnpm install
-            pnpm run build
+            pnpm run build --base=https://yamachu.github.io/vt2u
 
         - uses: actions/upload-pages-artifact@v4
           with:
