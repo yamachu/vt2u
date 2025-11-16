@@ -75,6 +75,10 @@ function App() {
           </Body>
         </div>
       </main>
+      <footer className="site-footer">
+        本アプリは Praat（GPLv3）を使用しています。対応ソース・ビルド手順:{" "}
+        <a href="https://github.com/yamachu/vt2u">github.com/yamachu/vt2u</a>
+      </footer>
     </div>
   );
 }

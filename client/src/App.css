@@ -46,7 +46,7 @@
   width: 100%;
   background: #f8f9fb;
   border-radius: 10px;
-  box-shadow: 0 6px 18px rgba(11,18,32,0.06);
+  box-shadow: 0 6px 18px rgba(11, 18, 32, 0.06);
   padding: 2em;
 }
 
@@ -60,6 +60,18 @@
   color: #666;
   margin-top: 14px;
   font-size: 13px;
+}
+
+.site-footer {
+  background: transparent;
+  color: #666;
+  padding: 12px 0;
+  font-size: 12px;
+  text-align: center;
+}
+.site-footer a {
+  color: inherit;
+  text-decoration: underline;
 }
 
 @media (max-width: 480px) {
