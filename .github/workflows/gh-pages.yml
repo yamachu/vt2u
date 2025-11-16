@@ -1,0 +1,55 @@
+name: Build and Deploy to GitHub Pages
+
+on:
+    push:
+        branches:
+            - main
+
+permissions:
+    pages: write
+    id-token: write
+
+jobs:
+    build-and-deploy:
+        runs-on: ubuntu-latest
+        steps:
+        - uses: actions/checkout@v5
+          with:
+            submodules: recursive
+        - uses: actions/setup-dotnet@v5
+          with:
+            dotnet-version: "10.0.x"
+        - uses: pnpm/action-setup@v4
+          with:
+            run_install: false
+            version: 10
+        - uses: actions/setup-node@v6
+          with:
+            node-version: 24
+            cache: "pnpm"
+            cache-dependency-path: client/pnpm-lock.yaml
+        - uses: mymindstorm/setup-emsdk@v14
+          with:
+            version: 3.1.56
+
+        - name: Build praat-wasm
+          working-directory: ./praat-wasm
+          run: ./build.sh
+
+        - name: Build vtlib
+          working-directory: ./vtlib
+          run: |
+            dotnet workload restore
+            dotnet publish
+
+        - name: Build client
+          working-directory: ./client
+          run: |
+            pnpm install
+            pnpm run build
+
+        - uses: actions/upload-pages-artifact@v4
+          with:
+            path: client/dist/
+        
+        - uses: actions/deploy-pages@v4
