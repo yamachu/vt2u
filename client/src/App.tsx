@@ -14,7 +14,9 @@ function App() {
   const [state, dispatch] = useReducer(appReducer, initialState);
 
   const workerRequest = useWorker(
-    `${import.meta.env.BASE_URL}/vtlib/worker.js`
+    `${
+      import.meta.env.MODE === "development" ? "" : import.meta.env.BASE_URL
+    }/vtlib/worker.js`
   );
   const { startRecording } = useAudioRecorder();
   const handleRecordAndProcess = useRecordAndProcess(
