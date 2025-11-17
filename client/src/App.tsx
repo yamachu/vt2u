@@ -47,7 +47,7 @@ function App() {
               <button
                 onClick={handleRecordAndProcess}
                 disabled={isWorking}
-                style={{ padding: "10px 20px", fontSize: "16px" }}
+                className="btn"
               >
                 {RecordingDuration}秒間録音を開始
               </button>
@@ -57,11 +57,7 @@ function App() {
               <button
                 onClick={handleRecordAndProcess}
                 disabled={isWorking}
-                style={{
-                  marginTop: "15px",
-                  padding: "10px 20px",
-                  fontSize: "16px",
-                }}
+                className="btn btn--mt"
               >
                 もう一度録音する
               </button>
@@ -71,7 +67,7 @@ function App() {
               <button
                 onClick={handleRecordAndProcess}
                 disabled={isWorking}
-                style={{ padding: "10px 20px", fontSize: "16px" }}
+                className="btn"
               >
                 最初からやり直す
               </button>
@@ -93,28 +89,14 @@ const StateLabel: React.FC<{ state: AppState }> = ({ state }) => {
       return null;
     case "recording":
       return (
-        <div style={{ color: "#0066cc", marginBottom: "10px" }}>
-          🎤 録音中... ({RecordingDuration}秒)
-        </div>
+        <div className="status-info">🎤 録音中... ({RecordingDuration}秒)</div>
       );
     case "processing":
-      return (
-        <div style={{ color: "#0066cc", marginBottom: "10px" }}>
-          ⏳ 解析中です...
-        </div>
-      );
+      return <div className="status-info">⏳ 解析中です...</div>;
     case "completed":
-      return (
-        <div style={{ color: "#008800", marginBottom: "10px" }}>
-          ✅ 解析完了!
-        </div>
-      );
+      return <div className="status-success">✅ 解析完了!</div>;
     case "error":
-      return (
-        <div style={{ color: "red", marginBottom: "10px" }}>
-          ❌ エラーが発生しました
-        </div>
-      );
+      return <div className="status-error">❌ エラーが発生しました</div>;
     default:
       return null;
   }
@@ -157,25 +139,17 @@ const Body: React.FC<React.PropsWithChildren<{ state: AppState }>> &
       return (
         <>
           <div style={{ marginTop: "15px", marginBottom: "15px" }}>
-            <strong>声道解析結果:</strong>
-            <div
-              style={{
-                background: "#e8f5e9",
-                padding: "15px",
-                marginTop: "10px",
-                borderRadius: "8px",
-                border: "2px solid #4caf50",
-              }}
-            >
+            <strong className="result-heading">声道解析結果:</strong>
+            <div className="result-box">
               <div style={{ marginBottom: "10px" }}>
                 <strong>推定性別:</strong>{" "}
-                <span style={{ fontSize: "18px", color: "#2e7d32" }}>
+                <span className="result-highlight">
                   {getGenderLabel(state.result.EstimatedGender)}
                 </span>
               </div>
               <div>
                 <strong>推定身長:</strong>{" "}
-                <span style={{ fontSize: "18px", color: "#2e7d32" }}>
+                <span className="result-highlight">
                   {state.result.MaleHeight.toFixed(1)} cm
                 </span>
               </div>
@@ -190,14 +164,7 @@ const Body: React.FC<React.PropsWithChildren<{ state: AppState }>> &
     case "error":
       return (
         <>
-          <div
-            style={{
-              background: "#fee",
-              padding: "10px",
-              borderRadius: "4px",
-              marginBottom: "10px",
-            }}
-          >
+          <div className="alert-box">
             {state.error instanceof Error ? state.error.message : state.error}
           </div>
           {error}
